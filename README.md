@@ -10,7 +10,7 @@ the master tolerates worker failures with automatic local fallback.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CLIENT                           │
+│                        CLIENT                                   │
 │  calls master.multiply(A, B)                                    │
 └────────────────────────────┬────────────────────────────────────┘
                              │ direct call (same process or RMI)
@@ -27,10 +27,10 @@ the master tolerates worker failures with automatic local fallback.
 │  │  • On failure: LocalFallback.compute(task)                │  │
 │  │  • Merges TaskResults into final matrix                   │  │
 │  │                                                           │  │
-│  │  Implements MasterService { ping() }  ← heartbeat only   │  │
+│  │  Implements MasterService { ping() }  ← heartbeat only    │  │
 │  └───────────────────────────────────────────────────────────┘  │
 │                                                                 │
-│  WorkerAddress[] (in-memory array, no config files)            │
+│  WorkerAddress[] (in-memory array, no config files)             │
 │    [0] localhost:2001/WorkerService-1                           │
 │    [1] localhost:2002/WorkerService-2                           │
 │    [2] localhost:2003/WorkerService-3                           │
@@ -50,12 +50,12 @@ the master tolerates worker failures with automatic local fallback.
 ┌─────────────────────────────────────────────────────────────────┐
 │                    BACKUP NODE                                  │
 │                                                                 │
-│  ScheduledExecutor → heartbeatCycle() every 2 s                │
+│  ScheduledExecutor → heartbeatCycle() every 2 s                 │
 │    │                                                            │
-│    └→ pingExecutor.submit(master.ping())  timeout=1.5s         │
-│         ├─ OK  → reset miss counter                            │
-│         └─ FAIL → consecutiveMisses++                          │
-│              └─ misses >= 3 → performTakeover()                │
+│    └→ pingExecutor.submit(master.ping())  timeout=1.5s          │
+│         ├─ OK  → reset miss counter                             │
+│         └─ FAIL → consecutiveMisses++                           │
+│              └─ misses >= 3 → performTakeover()                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
